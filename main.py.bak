@@ -17,17 +17,17 @@ def main(image_folder, output_folder, mask_size, mask_offset):
               if path.splitext(name)[-1][1:].lower() in EXTENSIONS)
 
     # start with the first image in the folder and process each image in order
-    name, img = next(inputs)
-    print("\n  Starting with: {}".format(name))
+    name, img = inputs.next()
+    print "\n  Starting with: {}".format(name)
     index = 0
     cv2.imwrite(path.join(output_folder, "img_{:04d}.jpg".format(index)), img)
     for name, next_img in inputs:
 
         if next_img is None:
-            print("\nUnable to proceed: {} failed to load.".format(name))
+            print "\nUnable to proceed: {} failed to load.".format(name)
             return
 
-        print("  Adding: {}".format(name))
+        print "  Adding: {}".format(name)
         image1_kp, image2_kp, matches = dollyzoom.findMatchesBetweenImages(next_img, img, 50, mask_offset, mask_size)
         transform = dollyzoom.findAffineTransform(image1_kp, image2_kp, matches)
         result = dollyzoom.applyTransform(next_img, transform, img)
@@ -36,7 +36,7 @@ def main(image_folder, output_folder, mask_size, mask_offset):
         index += 1
         cv2.imwrite(path.join(output_folder, "img_{:04d}.jpg".format(index)), result)
 
-    print("  Done!")
+    print "  Done!"
 
 
 if __name__ == "__main__":
