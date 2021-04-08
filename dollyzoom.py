@@ -53,7 +53,7 @@ def findMatchesBetweenImages(image_1, image_2, num_matches, mask_offset, mask_si
     offset = (mask_offset[0] * image_1.shape[0], mask_offset[1] * image_1.shape[1])
     size = (mask_size[0] * image_1.shape[0], mask_size[1] * image_1.shape[1])
     mask = np.zeros(image_1.shape[:2], dtype=np.uint8)
-    mask[offset[0] - size[0]/2:offset[0] + size[0]/2, offset[1] - size[1]/2:offset[1] + size[1]/2] = 255
+    mask[ int(offset[0]-size[0]/2):int(offset[0]+size[0]/2), int(offset[1]-size[1]/2):int(offset[1]+size[1]/2)] = 255
 
     image_1_kp, image_1_desc = orb.detectAndCompute(image_1, mask)
     image_2_kp, image_2_desc = orb.detectAndCompute(image_2, mask)
